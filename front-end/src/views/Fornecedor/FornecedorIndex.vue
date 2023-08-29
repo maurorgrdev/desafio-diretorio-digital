@@ -1,39 +1,13 @@
 <template>
-    <v-table theme="dark">
-        <thead>
-            <tr>
-                <th class="text-left">
-                Nome
-                </th>
-                <th class="text-left">
-                Cnpj
-                </th>
-                <th class="text-left">
-                Email
-                </th>
-                <th class="text-left">
-                Ações
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr
-                v-for="item in getFornecedores"
-                :key="item.empresa"
-            >
-                <td>{{ item.empresa }}</td>
-                <td>{{ item.cnpj }}</td>
-                <td>{{ item.email }}</td>
-                <td> <v-btn density="compact" icon="pencil" color="white"></v-btn> </td>
-            </tr>
-        </tbody>
-    </v-table>
-
+    <v-container>
+        <Table :headers="headersTable" :dados="store.getFornecedores"></Table>
+    </v-container>
 </template>
 
 <script setup>
     import { watch, onMounted, ref, computed} from 'vue'
     import { useFornecedorStore } from '../../store/fornecedores.js'
+    import Table from '@/components/Table.vue';
 
     const store = useFornecedorStore();
 
@@ -46,4 +20,10 @@
     onMounted(() => {
         store.fetchFornecedores();
     })
+
+    const headersTable = [
+        'CNPJ',
+        'Email',
+        'Nome'
+    ]
 </script>

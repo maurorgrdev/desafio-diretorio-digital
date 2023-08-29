@@ -285,13 +285,13 @@
   }
 
   function submit(){
-    // store.addFornecedor(dados); 
+    store.addFornecedor(dados); 
     console.log('passou');
   }
 
-  function  validate () {
-    submit();
-    upload();
+  async function  validate () {
+    await submit();
+    await upload();
   }
   
   function reset () {

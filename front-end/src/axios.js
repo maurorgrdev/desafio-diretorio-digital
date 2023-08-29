@@ -5,6 +5,7 @@ const api = axios.create({
     responseType: "json",
     responseEncoding: "utf8",
     headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
       Accept: "application/json",
       "Content-Type": "application/json;charset=UTF-8",
       "Access-Control-Allow-Origin": "*",
