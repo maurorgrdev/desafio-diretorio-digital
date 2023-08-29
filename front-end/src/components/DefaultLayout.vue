@@ -50,7 +50,7 @@ import { computed } from 'vue';
       return store.getUsuario;
     })
   
-    const drawer = ref(null)
+    const drawer = false
   </script>
   
   <!-- <script>

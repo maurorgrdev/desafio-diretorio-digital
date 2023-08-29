@@ -7,11 +7,26 @@ export const useFornecedorStore = defineStore("fornecedor", {
     }),
     getters: {
       getFornecedores(state){
-          return state.fornecedores
-        }
+        return state.fornecedores
+      },
+
+      getFornecedoresToTable(state){
+        console.log(state.fornecedores);
+        return state.fornecedores.map((fornecedor) => {
+          const fornecedorTemp = {
+            codigo: fornecedor.codigo,
+            nome: fornecedor.empresa,
+            email: fornecedor.email,
+            cnpj: fornecedor.cnpj,
+            atuacao: fornecedor.atuacao,
+          };
+
+          return fornecedorTemp;
+        });
+      }
     },
     actions: {
-      async fetchFornecedores() {
+      async loadFornecedores() {
         try {
           console.log('teste');
           const data = await api.get('/fornecedores')
