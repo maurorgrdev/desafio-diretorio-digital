@@ -2,7 +2,7 @@
     <v-container>
         <Title title="Fornecedores"></Title>
         <Table  
-            v-on:onClickEdit="callBackEdit" 
+            v-on:on-click-edit="callBackEdit" 
             v-on:onClickShow="callBackShow"
             v-on:onClickDelete="callBackDelete"
             v-on:onClickDownload="callBackDownload"
@@ -18,6 +18,10 @@
     import { useFornecedorStore } from '@/store/fornecedores.js'
     import Table from '@/components/Table.vue';
     import Title from '@/components/Title.vue';
+
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter()
 
     const store = useFornecedorStore();
 
@@ -42,13 +46,14 @@
     const headersTable = [
         'Codigo',
         'Nome',
-        'CNPJ',
         'Email',
+        'CNPJ',
         'Atuação',
+        'CEP',
     ]
 
     function callBackEdit(event){
-        console.log('ola gleiciane');
+        router.push({path: 'fornecedores/edita'});
     }
 
     function callBackDelete(event){

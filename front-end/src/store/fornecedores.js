@@ -11,18 +11,18 @@ export const useFornecedorStore = defineStore("fornecedor", {
       },
 
       getFornecedoresToTable(state){
-        console.log(state.fornecedores);
-        return state.fornecedores.map((fornecedor) => {
-          const fornecedorTemp = {
+        const fornecedorTemp = state.fornecedores.map((fornecedor) => {
+          return {
             codigo: fornecedor.codigo,
             nome: fornecedor.empresa,
             email: fornecedor.email,
             cnpj: fornecedor.cnpj,
             atuacao: fornecedor.atuacao,
-          };
-
-          return fornecedorTemp;
+            cep: fornecedor.cep,
+          }
         });
+        console.log(fornecedorTemp);
+        return fornecedorTemp;
       }
     },
     actions: {

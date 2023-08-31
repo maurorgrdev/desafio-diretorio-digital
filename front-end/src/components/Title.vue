@@ -1,6 +1,8 @@
 <template>
-    <div class="title text-h4">
-        {{ title }}
+    <div class="title-main">
+        <v-row>
+            <div class="text-h5"> Cadastro de Fornecedor</div>
+        </v-row>
     </div>
 </template>
 
@@ -10,3 +12,10 @@ export default {
     props: ['title'],
 }
 </script>
+
+<style>
+.title-main{
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+</style>

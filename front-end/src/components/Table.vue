@@ -9,10 +9,10 @@
                 </thead>
             <tbody>
                 <tr
-                    v-for="itens in objectToArray()"
-                    :key="itens[0]"
+                    v-for="itens in dadosInArray"
+                    
                 >
-                    <td v-for="item in itens" v-once>{{ item }}</td>
+                    <td v-for="item in itens" >{{ item }}</td>
                     <td>
                         <v-row>
                             <v-col cols="3"> <v-btn v-on:click="$emit('onClickEdit', $event)" class="btn-action" density="compact" icon="mdi-pencil"></v-btn> </v-col>
@@ -30,25 +30,36 @@
 export default {
     props: ['headers', 'dados', 'showTable'],
 
-    emits: ['onClickEdit'],
+    emits: ['onClickEdit', 'onClickDelete', 'onClickDelete', 'onClickDownload'],
 
     data: () => ({
         dadosInArray: [],
     }),
 
-    async mounted() {
+    setup() {
+
+    },
+
+    beforeUpdate () {
+        this.dadosInArray = this.dados.map(function(obj) {
+            return Object.keys(obj).map(function(key) {
+                return obj[key];
+            });
+        });
         
+        this.dadosInArray.forEach(element => {
+            element.forEach(element2 => {
+                console.log(element2);
+            });
+        });
+    },
+
+    async mounted() {
         
     },
 
     methods: {
-        objectToArray(){
-            return this.dados.map(function(obj) {
-                return Object.keys(obj).map(function(chave) {
-                    return obj[chave];
-                });
-            }); 
-        }
+        
     },
 }
 </script>
