@@ -55,6 +55,7 @@ Estas ações devem ser realizadas dentro da pasta /fornecedor-backend.
 - Configuração
 
 Faça uma cópia do arquivo env.example e o renomeie para .env
+Em seguida altere as variáveis de acesso ao banco de dados com suas credênciais
 
 ```bash
 APP_NAME=Fornecedor
@@ -63,11 +64,11 @@ DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=diretorio
-DB_USERNAME=SEU_USERNAME
-DB_PASSWORD=_SEU_PASSWORD
+DB_USERNAME=
+DB_PASSWORD=
 ```
 
-Acessa sua conta no mailtrap e altere os dados de conexão MAIL com Laravel > 9 com suas credênciais
+Acessa sua conta no mailtrap e altere os dados de conexão MAIL com Laravel > 9 e suas credênciais
 
 ```bash
 MAIL_MAILER=smtp
@@ -78,7 +79,7 @@ MAIL_PASSWORD=
 MAIL_ENCRYPTION=tls
 ```
 
-Execute os seguintes comandos nessa mesma ordem
+Instale as dependências via composer e gere a chave: 
 
 ```bash
 $ composer install
@@ -111,7 +112,7 @@ email: admin@gmail.com
 password: senha
 ```
 
-E por fim inicie o servidor:
+E por fim inicie a API:
 ```bash
 $ php artisan serve --port=8000
 ```
