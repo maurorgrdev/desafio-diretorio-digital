@@ -11,8 +11,14 @@ pinia.use(piniaPluginPersistedstate)
 
 loadFonts()
 
+const token = localStorage.getItem("token")
+
 createApp(App)
   .use(router)
   .use(vuetify)
   .use(pinia)
   .mount('#app')
+
+if(!token){
+  router.push({ path: '/login'});
+}

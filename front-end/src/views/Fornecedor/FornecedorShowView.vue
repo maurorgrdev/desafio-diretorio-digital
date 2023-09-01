@@ -14,7 +14,7 @@
     import { useFornecedorStore } from '@/store/fornecedores';
     import FornecedorForm from '@/components/Fornecedor/FornecedorForm.vue';
     import { onMounted, computed, toRefs } from 'vue';
-    import { defineProps, defineEmits } from 'vue'
+    import { defineProps } from 'vue'
 
     import api from '@/axios';
     import { useRouter } from 'vue-router';

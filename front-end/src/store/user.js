@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 import api from "../axios"
+import { ref } from 'vue'
 
 export const useUsuarioStore = defineStore("usuario", {
     persist: true,
     state: () => ({
         usuario: {},
-        token: {},
+        token: '',
     }),
     getters: {
       getUsuario(state){
@@ -18,10 +19,10 @@ export const useUsuarioStore = defineStore("usuario", {
                 const response = await api.post('/login', data);
                 
                 await localStorage.setItem("token", response.data.access_token);
+                this.token = localStorage.getItem("token");
 
                 return true;
             } catch (error) {
-                localStorage.setItem("token", '');
 
                 return false;
             }
@@ -35,7 +36,17 @@ export const useUsuarioStore = defineStore("usuario", {
 
                 return true;
             } catch (error) {
-                localStorage.setItem("token", '');
+
+                return false;
+            }
+        },
+
+        async verifyToken(){
+            try {
+                const response = await api.get('/verify-token');
+
+                return true;
+            } catch (error) {
 
                 return false;
             }

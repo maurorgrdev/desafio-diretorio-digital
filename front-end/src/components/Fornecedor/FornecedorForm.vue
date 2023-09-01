@@ -209,7 +209,7 @@
           
           <v-spacer></v-spacer>
           
-          <div class="div-btn-right">
+          <div class="div-btn-right" v-show="tipo !== 'show'">
             <v-btn
               class="btn-form"
               color="warning"
@@ -218,7 +218,7 @@
               Resetar
             </v-btn>
           </div>
-          <div class="div-btn-right">
+          <div class="div-btn-right" v-show="tipo !== 'show'">
             <v-btn
               class="btn-form"
               color="success"
@@ -354,6 +354,8 @@ export default {
         estado: '',
         telefone: '',
         atuacao: '',
+        arquivo_id: '',
+        arquivo_filename: '',
       }
     },
 

@@ -18,13 +18,12 @@
     import { onMounted, computed, toRefs } from 'vue';
     import api from '@/axios';
     import { useRouter } from 'vue-router';
+    import { defineProps } from 'vue'
 
     const router = useRouter()
 
 
-    const props = defineProps({
-        id: String ,
-    })
+    const props = defineProps(['id'])
 
     const store = useFornecedorStore()
 

@@ -1,6 +1,25 @@
 <template>
     <v-container>
-        <Title title="Fornecedores"></Title>
+        <v-row class="container-main">
+            <v-col cols="10">
+                <div class="text-h5"> Cadastro de Fornecedor</div>
+            </v-col>
+
+            <v-spacer></v-spacer>
+
+            <v-col cols="2">
+                <div >
+                    <v-btn
+                        class="btn-form"
+                        color="blue-darken-4"
+                        @click="router.push({ path: '/fornecedores/novo'})"
+                    >
+                        NOVO
+                    </v-btn>
+                </div>
+            </v-col>
+        </v-row>
+        
         <Table
             v-on:on-click-edit="callBackEdit" 
             v-on:on-click-show="callBackShow"
@@ -89,3 +108,13 @@
         });
     }
 </script>
+
+<style>
+.container-main{
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+.btn-form{
+    width: 150px;
+}
+</style>
