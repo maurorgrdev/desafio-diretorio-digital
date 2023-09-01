@@ -52,7 +52,6 @@
 
     async function uploadArquivoFornecedor(arquivoFornecedor, fornecedorCreate){
         let form = new FormData()
-        console.log(arquivoFornecedor);
         form.append('file', arquivoFornecedor)
         form.append('name', arquivoFornecedor.name)
         form.append('fornecedor_email', fornecedorCreate.email)

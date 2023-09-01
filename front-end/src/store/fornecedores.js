@@ -19,7 +19,7 @@ export const useFornecedorStore = defineStore("fornecedor", {
         const fornecedorTemp = state.fornecedores.map((fornecedor) => {
           return {
             codigo: fornecedor.codigo,
-            empresa: fornecedor.empresa,
+            nome_empresa: fornecedor.nome_empresa,
             email: fornecedor.email,
             cnpj: fornecedor.cnpj,
             atuacao: fornecedor.atuacao,
@@ -34,7 +34,6 @@ export const useFornecedorStore = defineStore("fornecedor", {
       async loadFornecedor(codigo){
         try {
           const data = await api.get(`/fornecedores/${codigo}`)
-          // console.log(data.data);
           this.fornecedor = {...data.data}
         }
           catch (error) {

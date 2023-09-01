@@ -19,7 +19,7 @@ class FornecedorResource extends JsonResource
 
         return [
             'codigo' => $this->id,
-            'empresa'=> strtoupper($this->nome_empresa),
+            'nome_empresa'=> $this->nome_empresa,
             'cnpj'=> $this->cnpj,
             'email' => $this->email,
             'cep' => $this->cep,

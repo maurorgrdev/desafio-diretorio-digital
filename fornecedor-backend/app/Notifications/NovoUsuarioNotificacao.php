@@ -40,7 +40,6 @@ class NovoUsuarioNotificacao extends Notification
     {
         return (new MailMessage)
                     ->line('Bem vindo ao teste da Diretorio Digital.')
-                    ->action('Acessar Sistema', url('/'))
                     ->line('Obrigado por fazer parte do nosso time! Segue abaixo  suas credenciais:')
                     ->line('Email: '. $this->email)
                     ->line('Senha: '. $this->senha);

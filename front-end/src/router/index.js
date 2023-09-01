@@ -70,9 +70,13 @@ router.beforeEach(async (to, from, next) => {
       if(isAuthneticated){
         next();
       } else {
+        localStorage.setItem("token", '');
+        store.token = '';
         next({name: 'login'})
       }
     } else {
+      localStorage.setItem("token", '');
+      store.token = '';
       next({name: 'login'})
     }
   } else {

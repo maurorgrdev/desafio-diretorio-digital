@@ -16,7 +16,7 @@
             md="4"
           >
             <v-text-field
-              v-model="dados.empresa"
+              v-model="dados.nome_empresa"
               label="Nome"
               variant="solo"
             ></v-text-field>
@@ -243,7 +243,7 @@ export default {
   data() {
     return { 
       dados: {
-        empresa: '',
+        nome_empresa: '',
         cnpj: '',
         email: '',
         cep: '',
@@ -271,7 +271,7 @@ export default {
   mounted() {
     if(this.tipo === 'criacao'){
       this.dados = {
-        nome: '',
+        nome_empresa: '',
         cnpj: '',
         email: '',
         cep: '',
@@ -336,7 +336,6 @@ export default {
     },
 
     novoArquivo(){
-      console.log(this.arquivoFornecedor);
       this.arquivoSelecionado = this.arquivoFornecedor[0];
     },
 

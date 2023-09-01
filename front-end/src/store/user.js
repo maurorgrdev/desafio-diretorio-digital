@@ -23,7 +23,8 @@ export const useUsuarioStore = defineStore("usuario", {
 
                 return true;
             } catch (error) {
-
+                localStorage.setItem("token", '');
+                this.token = '';
                 return false;
             }
         },
