@@ -1,11 +1,11 @@
 <template>
     <v-container>
         <Title title="Fornecedores"></Title>
-        <Table  
+        <Table
             v-on:on-click-edit="callBackEdit" 
-            v-on:onClickShow="callBackShow"
-            v-on:onClickDelete="callBackDelete"
-            v-on:onClickDownload="callBackDownload"
+            v-on:on-click-show="callBackShow"
+            v-on:on-click-delete="callBackDelete"
+            v-on:on-click-download="callBackDownload"
             :showTable="showTable" 
             :headers="headersTable" 
             :dados="store.getFornecedoresToTable"
@@ -16,10 +16,13 @@
 <script setup>
     import { watch, onMounted, ref, computed} from 'vue'
     import { useFornecedorStore } from '@/store/fornecedores.js'
+    import { useRouter } from 'vue-router'; 
+
     import Table from '@/components/Table.vue';
     import Title from '@/components/Title.vue';
+    import api from '@/axios';
 
-    import { useRouter } from 'vue-router';
+    import DialogTeste from '@/components/Dialog.vue';
 
     const router = useRouter()
 
@@ -49,22 +52,40 @@
         'Email',
         'CNPJ',
         'Atuação',
-        'CEP',
+        'Arquivo',
     ]
 
-    function callBackEdit(event){
-        router.push({path: 'fornecedores/edita'});
+    let showDialog = true
+
+    function callBackEdit(fornecedor_id){
+        router.push({ path: `/fornecedores/edita/${fornecedor_id}`});
     }
 
-    function callBackDelete(event){
-        console.log('ola gleiciane');
+    async function callBackDelete(fornecedor_id){
+        await api.delete(`/delete-fornecedor/${fornecedor_id}`, {
+            baseURL: 'http://localhost:8000/api/',
+            responseType: 'json',
+        });
+
+        await store.loadFornecedores();
     }
 
-    function callBackShow(event){
-        console.log('ola gleiciane');
+    function callBackShow(fornecedor_id){
+        router.push({ path: `/fornecedores/visualiza/${fornecedor_id}`});
     }
 
-    function callBackDownload(event){
-        console.log('ola gleiciane');
+    async function callBackDownload(fornecedor_id, file_name){
+        await api.get(`/download-fornecedor/${fornecedor_id}`, {
+            baseURL: 'http://localhost:8000/api/',
+            responseType: 'blob',
+        }).then((response) => {
+            const fileUrl = window.URL.createObjectURL(new Blob([response.data]))
+            
+            let fileLink = document.createElement('a')
+            fileLink.href = fileUrl
+            fileLink.setAttribute('download', file_name)
+            document.body.appendChild(fileLink)
+            fileLink.click();
+        });
     }
 </script>

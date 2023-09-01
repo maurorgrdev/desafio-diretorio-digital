@@ -17,7 +17,6 @@ export const useUsuarioStore = defineStore("usuario", {
             try {
                 const response = await api.post('/login', data);
                 
-                await console.log(response);
                 await localStorage.setItem("token", response.data.access_token);
 
                 return true;

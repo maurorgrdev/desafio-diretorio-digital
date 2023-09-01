@@ -4,7 +4,8 @@
             :title="title" 
             :subtitle="subtitle"
             :dados-fornecedor="dadosFornecedor"
-            v-on:onClickConfirm="confirmForm"
+            tipo="criacao"
+            v-on:on-click-confirm="confirmForm"
         ></FornecedorForm>
     </v-container>
 </template>
@@ -29,24 +30,22 @@ let dadosFornecedor = {}
 async function confirmForm(fornecedorCreate, arquivoFornecedor){
     await store.addFornecedor(fornecedorCreate);
 
-    await uploadArquivoFornecedor(arquivoFornecedor);
+    await uploadArquivoFornecedor(arquivoFornecedor, fornecedorCreate);
 
     router.push({ path: '/fornecedores' });
 }
 
-async function uploadArquivoFornecedor(arquivoFornecedor){
-    
-    let form = new FormData()
-    form.append('file', arquivoFornecedor)
-    form.append('name', arquivoFornecedor.name)
-    console.log(form);
-    console.log('after');
+async function uploadArquivoFornecedor(arquivoFornecedor, fornecedorCreate){
+  let form = new FormData()
+  form.append('file', arquivoFornecedor)
+  form.append('name', arquivoFornecedor.name)
+  form.append('fornecedor_email', fornecedorCreate.email)
 
-    const haha = await api.post("/upload-fornecedor", form, {
-      baseURL: 'http://localhost:8000/api/',
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    });
-  }
+  const haha = await api.post("/upload-fornecedor", form, {
+    baseURL: 'http://localhost:8000/api/',
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+}
 </script>

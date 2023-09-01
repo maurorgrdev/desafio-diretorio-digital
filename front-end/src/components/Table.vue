@@ -15,10 +15,10 @@
                     <td v-for="item in itens" >{{ item }}</td>
                     <td>
                         <v-row>
-                            <v-col cols="3"> <v-btn v-on:click="$emit('onClickEdit', $event)" class="btn-action" density="compact" icon="mdi-pencil"></v-btn> </v-col>
-                            <v-col cols="3"> <v-btn v-on:click="$emit('onClickDelete', $event)"  class="btn-action" density="compact" icon="mdi-delete"></v-btn> </v-col>
-                            <v-col cols="3"> <v-btn v-on:click="$emit('onClickShow', $event)" class="btn-action" density="compact" icon="mdi-eye"></v-btn> </v-col>
-                            <v-col cols="3"> <v-btn v-on:click="$emit('onClickDownload', $event)" class="btn-action" density="compact" icon="mdi-download"></v-btn> </v-col>
+                            <v-col cols="3"> <v-btn v-on:click="$emit('onClickEdit', itens[0])" class="btn-action" density="compact" icon="mdi-pencil"></v-btn> </v-col>
+                            <v-col cols="3"> <v-btn v-on:click="$emit('onClickDelete', itens[0])"  class="btn-action" density="compact" icon="mdi-delete"></v-btn> </v-col>
+                            <v-col cols="3"> <v-btn v-on:click="$emit('onClickShow', itens[0])" class="btn-action" density="compact" icon="mdi-eye"></v-btn> </v-col>
+                            <v-col cols="3"> <v-btn v-on:click="$emit('onClickDownload', itens[0] , itens[(itens.length - 1)])" class="btn-action" density="compact" icon="mdi-download"></v-btn> </v-col>
                         </v-row>
                     </td>
                 </tr>
@@ -30,7 +30,7 @@
 export default {
     props: ['headers', 'dados', 'showTable'],
 
-    emits: ['onClickEdit', 'onClickDelete', 'onClickDelete', 'onClickDownload'],
+    emits: ['onClickEdit', 'onClickShow', 'onClickDelete', 'onClickDownload'],
 
     data: () => ({
         dadosInArray: [],
@@ -46,12 +46,6 @@ export default {
                 return obj[key];
             });
         });
-        
-        this.dadosInArray.forEach(element => {
-            element.forEach(element2 => {
-                console.log(element2);
-            });
-        });
     },
 
     async mounted() {
@@ -59,14 +53,13 @@ export default {
     },
 
     methods: {
-        
     },
 }
 </script>
 
 <style>
 .container-main{
-    max-width: 95%
+    max-width: 100%
 }
 .table-style{
     border-collapse: collapse;

@@ -4,8 +4,13 @@ import api from "../axios"
 export const useFornecedorStore = defineStore("fornecedor", {
     state: () => ({
         fornecedores: [],
+        fornecedor: {},
     }),
     getters: {
+      getFornecedor(state){
+        return state.fornecedor
+      },
+      
       getFornecedores(state){
         return state.fornecedores
       },
@@ -14,36 +19,59 @@ export const useFornecedorStore = defineStore("fornecedor", {
         const fornecedorTemp = state.fornecedores.map((fornecedor) => {
           return {
             codigo: fornecedor.codigo,
-            nome: fornecedor.empresa,
+            empresa: fornecedor.empresa,
             email: fornecedor.email,
             cnpj: fornecedor.cnpj,
             atuacao: fornecedor.atuacao,
-            cep: fornecedor.cep,
+            arquivo_filename: fornecedor.arquivo_filename,
           }
         });
-        console.log(fornecedorTemp);
+        
         return fornecedorTemp;
       }
     },
     actions: {
+      async loadFornecedor(codigo){
+        try {
+          const data = await api.get(`/fornecedores/${codigo}`)
+          // console.log(data.data);
+          this.fornecedor = {...data.data}
+        }
+          catch (error) {
+            alert(error)
+            
+        }
+      },
+
       async loadFornecedores() {
         try {
-          console.log('teste');
           const data = await api.get('/fornecedores')
           this.fornecedores = data.data
         }
           catch (error) {
             alert(error)
-            console.log(error)
+            
         }
       },
 
       async addFornecedor(data){
         try {
-          await api.post('/fornecedores', data);
+          const response = await api.post('/fornecedores', data);
+
+          return response.data;
+
         } catch (error) {
-          alert(error)
-          console.log(error)
+          return error;
+        }
+      },
+
+      async editFornecedor(data){
+        try {
+          const response = await api.patch(`/fornecedores/${data.codigo}`, data);
+
+          return response.data;
+        } catch (error) {
+          return error;
         }
       }
     },

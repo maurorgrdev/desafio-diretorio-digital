@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 import FornecedorCreateView from '@/views/Fornecedor/FornecedorCreateView'
 import FornecedorUpdateView from '@/views/Fornecedor/FornecedorUpdateView'
+import FornecedorShowView from '@/views/Fornecedor/FornecedorShowView'
 import FornecedorIndex from '@/views/Fornecedor/FornecedorIndex.vue'
 import Login from '@/views/Usuario/Login.vue'
 import DefaultLayout from '@/components/DefaultLayout.vue'
@@ -30,9 +31,15 @@ const routes = [
         props: true,
       },
       {
-        path: 'edita',
+        path: 'edita/:id',
         name: 'Atualiza Fornecedor',
         component: FornecedorUpdateView,
+        props: true,
+      },
+      {
+        path: 'visualiza/:id',
+        name: 'Visualiza Fornecedor',
+        component: FornecedorShowView,
         props: true,
       },
     ],

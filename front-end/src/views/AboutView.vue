@@ -29,7 +29,6 @@ import { useFornecedorStore } from "../store/fornecedores";
   });
   
   onMounted(() => {
-    console.log('teste');
     store.fetchFornecedores();
   });
 </script>

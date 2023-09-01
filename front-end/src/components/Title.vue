@@ -1,9 +1,9 @@
 <template>
-    <div class="title-main">
+    <v-container class="title-main">
         <v-row>
             <div class="text-h5"> Cadastro de Fornecedor</div>
         </v-row>
-    </div>
+    </v-container>
 </template>
 
 <script>

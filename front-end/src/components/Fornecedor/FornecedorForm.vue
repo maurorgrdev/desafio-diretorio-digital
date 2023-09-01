@@ -16,7 +16,7 @@
             md="4"
           >
             <v-text-field
-              v-model="dados.nome_empresa"
+              v-model="dados.empresa"
               label="Nome"
               variant="solo"
             ></v-text-field>
@@ -163,18 +163,38 @@
         </v-row>
 
         <v-row>
-          <v-spacer></v-spacer>
-          <v-col cols="4" >
+          <v-col cols="8" >
             <v-file-input
               @change="novoArquivo"
+              v-model="arquivoFornecedor"
+              :disabled="dados.arquivo_filename !== '' || tipo === 'show'"
               chips
               multiple
               variant="outlined"
               label="File input w/ chips"
             ></v-file-input>
           </v-col>
-        </v-row>
 
+          <v-col cols="2">
+            <div v-show="dados.arquivo_filename !== ''">
+              <v-btn
+                icon="mdi-download-circle"
+                v-on:click="$emit('onClickDownloadFile', dados.codigo, dados.arquivo_filename);"
+              >
+              </v-btn>
+            </div>
+          </v-col>
+
+          <v-col cols="2">
+            <div v-show="dados.arquivo_filename !== '' && tipo !== 'show'">
+              <v-btn
+                icon="mdi-delete-circle"
+                @click="clickDeleteFile"
+              >
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
         
         <v-row >
           <div class="div-btn-left">
@@ -206,8 +226,7 @@
             >
               Salvar
             </v-btn>
-          </div >
-          <!-- </div> -->
+          </div>
         </v-row>
       </template>
     </v-card>
@@ -217,15 +236,14 @@
 <script>
 
 export default {
-  
-  props: ['title', 'subtitle', 'dadosFornecedor'],
+  props: ['title', 'subtitle', 'dadosFornecedor', 'tipo'],
 
-  emits: ['onClickConfirm'],
+  emits: ['onClickConfirm', 'onClickDeleteFile', 'onClickDownloadFile'],
 
   data() {
     return { 
       dados: {
-        nome_empresa: '',
+        empresa: '',
         cnpj: '',
         email: '',
         cep: '',
@@ -237,12 +255,65 @@ export default {
         estado: '',
         telefone: '',
         atuacao: '',
+        arquivo_id: '',
+        arquivo_filename: '',
       },
 
       arquivoSelecionado: {},
+
+      arquivoFornecedor: [],
+
+      showNewFile: false,
     }
   },
 
+  
+  mounted() {
+    if(this.tipo === 'criacao'){
+      this.dados = {
+        nome: '',
+        cnpj: '',
+        email: '',
+        cep: '',
+        endereco: '',
+        numero: '',
+        complemento: '',
+        bairro: '',
+        cidade: '',
+        estado: '',
+        telefone: '',
+        atuacao: '',
+        arquivo_id: '',
+        arquivo_filename: '',
+      },
+      this.showNewFile = true
+    }
+  },
+
+  beforeUpdate(){
+    if(this.tipo === 'edicao' || this.tipo === 'show'){
+      this.dados = {
+        ...this.dadosFornecedor
+      }
+
+      this.showNewFile = false;
+
+      if(this.dadosFornecedor.arquivo_filename !== ''){
+        this.arquivoFornecedor = [ {
+          name: this.dadosFornecedor.arquivo_filename,
+          lastModified: 0,
+          size: 0,
+          tipo: "",
+          webkitRelativePath: "",
+        }]
+      } else {
+        this.arquivoFornecedor = [];
+        this.showNewFile = true;
+      }
+    } else {
+      this.showNewFile = true;
+    }
+  },
 
 
   methods: {
@@ -254,12 +325,19 @@ export default {
       }
     },
 
+    clickDeleteFile(){
+      this.showNewFile = true;
+      this.arquivoFornecedor = [];
+      this.$emit('onClickDeleteFile', this.dados.codigo, this.dados.arquivo_filename);
+    },
+
     validateForm () {
       return true;
     },
 
-    novoArquivo(event){
-      this.arquivoSelecionado = event.target.files[0]
+    novoArquivo(){
+      console.log(this.arquivoFornecedor);
+      this.arquivoSelecionado = this.arquivoFornecedor[0];
     },
 
     resetarFormulario () {

@@ -49,7 +49,6 @@
 
         const valido = this.validaCnpj(this.login) || this.validaEmail(this.login);
 
-        console.log(this.login);
         if(valido){
             const results = {
                 email: await this.validaEmail(this.login) ? this.login : '',
