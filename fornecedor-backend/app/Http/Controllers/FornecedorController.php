@@ -113,7 +113,7 @@ class FornecedorController extends Controller
 
         if(!$check_file_exist){
 
-            $path_final = Storage::disk('public')->put('fornecedor/' . $fornecedor->id , $request->file('file'));
+            $path_final = Storage::disk('local')->put('fornecedor/' . $fornecedor->id , $request->file('file'));
             
             $array_name_file = explode("/", $path_final);
 
