@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
         // FornecedorModel::factory(10)->create();
 
         DB::table('users')->insert([
-            'name' => 'Mauro',
-            'email' => 'mauro@gmail.com',
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('senha'),
         ]);
     }
