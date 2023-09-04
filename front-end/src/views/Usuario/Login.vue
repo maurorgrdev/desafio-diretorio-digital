@@ -68,8 +68,9 @@
         const response = await this.usuarioStore.login(results);
         
         await this.usuarioStore.loadUsuario();
-
+        
         if(response){
+            
             await this.$router.replace({ path: '/fornecedores' })
         } else {
 

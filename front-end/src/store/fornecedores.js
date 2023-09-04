@@ -60,6 +60,7 @@ export const useFornecedorStore = defineStore("fornecedor", {
           return response.data;
 
         } catch (error) {
+          
           return error;
         }
       },

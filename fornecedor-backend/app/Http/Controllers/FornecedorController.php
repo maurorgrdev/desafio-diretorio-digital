@@ -23,18 +23,22 @@ class FornecedorController extends Controller
             $fornecedor = FornecedorModel::create($data);
             $senha = bin2hex(random_bytes(3));
             $user = User::create([
-                'name' => $fornecedor['nome_empresa'],
-                'email' => $fornecedor['email'],
+                'name' => $fornecedor->nome_empresa,
+                'email' => $fornecedor->email,
                 'password' => bcrypt($senha),
             ]);
 
             $user->notify(new NovoUsuarioNotificacao($fornecedor->email, $senha));
 
             return response()->json([
-                "message" => "Fornecedor criado com sucesso!"
+                "message" => "Fornecedor criado com sucesso!",
+                "success" => true
             ], 201);
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json([
+                'message' => $e->getMessage(),
+                'success' => false,
+            ]);
         }
     }
 
@@ -48,17 +52,19 @@ class FornecedorController extends Controller
             // $user->notify(new EdicaoUsuarioNotificacao($data['email'], 'senha'));
 
             return response()->json([
-                "message" => "Fornecedor atualizado"
+                "message" => "Fornecedor atualizado",
+                "success" => true,
             ], 200);
         } else {
             return response()->json([
-                "message" => "Fornecedor não encontrado!"
-              ], 404);
+                "message" => "Fornecedor não encontrado!",
+                "success" => false,
+              ]);
         }
     }
 
     public function index(){
-        $fornecedores = FornecedorModel::paginate();
+        $fornecedores = FornecedorModel::all();
 
         return response()->json(FornecedorResource::collection($fornecedores), 200);
     }
@@ -126,9 +132,16 @@ class FornecedorController extends Controller
             
             $upload->save();
 
-            return response()->json(['message' => 'sucesso'], 200);
+            return response()->json([
+                'message' => 'Upload feito com sucesso',
+                'success' => true
+            ], 200);
         } else {
-            return response()->json(['message' => 'Arquivo já existente'], 200);
+            return response()->json([
+                'message' => 'Arquivo já existente',
+                'success' => false
+
+            ], 200);
         }
     }
 

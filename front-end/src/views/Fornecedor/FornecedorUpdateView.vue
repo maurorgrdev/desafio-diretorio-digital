@@ -42,12 +42,22 @@
 
     const emit = defineEmits(['change', 'delete'])    
 
-    async function callBackConfirmForm(fornecedorAtualizado, arquivoFornecedor){
-        await store.editFornecedor(fornecedorAtualizado);
+    async function callBackConfirmForm(fornecedorAtualizado, arquivoFornecedor, arquivoFlag){
+        const responseEditFornecedor = await store.editFornecedor(fornecedorAtualizado);
 
-        await uploadArquivoFornecedor(arquivoFornecedor, fornecedorAtualizado);
+        if( responseEditFornecedor.success ) {    
+            if(arquivoFlag){
+                const responseFile = await uploadArquivoFornecedor(arquivoFornecedor, fornecedorAtualizado);
 
-        router.push({ path: '/fornecedores' });
+                if(!responseFile.success){
+                    alert('Erro ao cadastrar arquivo')
+                }
+            }
+
+            router.push({  path: '/fornecedores' })
+        } else {
+            alert('Erro ao cadastrar fornecedor ')
+        }
     }
 
     async function uploadArquivoFornecedor(arquivoFornecedor, fornecedorCreate){
@@ -56,12 +66,18 @@
         form.append('name', arquivoFornecedor.name)
         form.append('fornecedor_email', fornecedorCreate.email)
 
-        const haha = await api.post("/upload-fornecedor", form, {
-            baseURL: 'http://localhost:8000/api/',
-            headers: {
-            "Content-Type": "multipart/form-data"
-            }
-        });
+        try {
+            const responseUpload = await api.post("/upload-fornecedor", form, {
+                baseURL: 'http://localhost:8000/api/',
+                headers: {
+                "Content-Type": "multipart/form-data"
+                }
+            });
+
+            return responseUpload.data;
+        } catch (error) {
+            return error;
+        }
     }
 
     async function callBackDownload(fornecedor_id, file_name){

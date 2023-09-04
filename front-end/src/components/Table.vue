@@ -15,9 +15,9 @@
                 <td>
                     <v-row>
                         <v-col cols="3"> <v-btn v-on:click="$emit('onClickEdit', itens[0])" class="btn-action" density="compact" icon="mdi-pencil"></v-btn> </v-col>
-                        <v-col cols="3"> <v-btn v-on:click="$emit('onClickDelete', itens[0])"  class="btn-action" density="compact" icon="mdi-delete"></v-btn> </v-col>
+                        <v-col v-show="itens[itens.length - 1] != ''" cols="3"> <v-btn v-on:click="$emit('onClickDelete', itens[0])"  class="btn-action" density="compact" icon="mdi-delete"></v-btn> </v-col>
                         <v-col cols="3"> <v-btn v-on:click="$emit('onClickShow', itens[0])" class="btn-action" density="compact" icon="mdi-eye"></v-btn> </v-col>
-                        <v-col cols="3"> <v-btn v-on:click="$emit('onClickDownload', itens[0] , itens[(itens.length - 1)])" class="btn-action" density="compact" icon="mdi-download"></v-btn> </v-col>
+                        <v-col v-show="itens[itens.length - 1] != ''" cols="3"> <v-btn v-on:click="$emit('onClickDownload', itens[0] , itens[(itens.length - 1)])" class="btn-action" density="compact" icon="mdi-download"></v-btn> </v-col>
                     </v-row>
                 </td>
             </tr>

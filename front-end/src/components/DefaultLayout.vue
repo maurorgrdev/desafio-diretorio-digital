@@ -37,7 +37,8 @@
   <script setup>
     import { ref } from 'vue'
     import { useUsuarioStore } from '@/store/user';
-import { computed } from 'vue';
+    import {  computed } from 'vue';
+    import { onMounted } from 'vue';
   
     const store = useUsuarioStore();
 
@@ -48,6 +49,10 @@ import { computed } from 'vue';
 
     const getUsuario = computed(() => {
       return store.getUsuario;
+    })
+
+    onMounted(() => {
+      // window.location.reload(true);
     })
   
     const drawer = false

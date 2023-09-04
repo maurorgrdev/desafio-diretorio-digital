@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('fornecedores', function (Blueprint $table) {
             $table->id();
-            $table->string('nome_empresa');
-            $table->string('cnpj');
-            $table->string('email');
+            $table->string('nome_empresa')->unique();
+            $table->string('cnpj')->unique();
+            $table->string('email')->unique();
             $table->string('cep')->nullable();
             $table->string('endereco')->nullable();
             $table->string('numero')->nullable();

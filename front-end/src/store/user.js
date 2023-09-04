@@ -6,7 +6,7 @@ export const useUsuarioStore = defineStore("usuario", {
     persist: true,
     state: () => ({
         usuario: {},
-        token: '',
+        token_user: '',
     }),
     getters: {
       getUsuario(state){
@@ -18,13 +18,16 @@ export const useUsuarioStore = defineStore("usuario", {
             try {
                 const response = await api.post('/login', data);
                 
-                await localStorage.setItem("token", response.data.access_token);
-                this.token = localStorage.getItem("token");
+                const token_acess = response.data.access_token;
+                
+                await localStorage.setItem("token", token_acess);
+                this.token_user = token_acess;
 
                 return true;
             } catch (error) {
                 localStorage.setItem("token", '');
-                this.token = '';
+                this.token_user = '';
+                this.user = {};
                 return false;
             }
         },
@@ -44,7 +47,14 @@ export const useUsuarioStore = defineStore("usuario", {
 
         async verifyToken(){
             try {
-                const response = await api.get('/verify-token');
+                const response = await api.get('/verify-token', {
+                    baseURL: 'http://localhost:8000/api/',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        Accept: "application/json",
+                        "Content-Type": "application/json;charset=UTF-8",
+                    }
+                  });
 
                 return true;
             } catch (error) {

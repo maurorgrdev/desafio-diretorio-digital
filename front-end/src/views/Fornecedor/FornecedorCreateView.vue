@@ -5,7 +5,7 @@
             :subtitle="subtitle"
             :dados-fornecedor="dadosFornecedor"
             tipo="criacao"
-            v-on:on-click-confirm="confirmForm"
+            v-on:on-click-confirm="callBackConfirmForm"
         ></FornecedorForm>
     </v-container>
 </template>
@@ -27,12 +27,22 @@ const subtitle = 'Cadastrando um novo fornecedor'
 
 let dadosFornecedor = {}
 
-async function confirmForm(fornecedorCreate, arquivoFornecedor){
-    await store.addFornecedor(fornecedorCreate);
+async function callBackConfirmForm(fornecedorCreate, arquivoFornecedor, arquivoFlag){
+  const responseAddFornecedor = await store.addFornecedor(fornecedorCreate)
 
-    await uploadArquivoFornecedor(arquivoFornecedor, fornecedorCreate);
+  if( responseAddFornecedor.success ) {    
+    if(arquivoFlag){
+      const responseFile = await uploadArquivoFornecedor(arquivoFornecedor, fornecedorCreate)
 
-    router.push({ path: '/fornecedores' });
+      if(!responseFile.success){
+        alert('Erro ao cadastrar arquivo')
+      }
+    }
+
+    router.push({  path: '/fornecedores' })
+  } else {
+    alert('Erro ao cadastrar fornecedor ')
+  }
 }
 
 async function uploadArquivoFornecedor(arquivoFornecedor, fornecedorCreate){
@@ -41,11 +51,17 @@ async function uploadArquivoFornecedor(arquivoFornecedor, fornecedorCreate){
   form.append('name', arquivoFornecedor.name)
   form.append('fornecedor_email', fornecedorCreate.email)
 
-  const haha = await api.post("/upload-fornecedor", form, {
-    baseURL: 'http://localhost:8000/api/',
-    headers: {
-      "Content-Type": "multipart/form-data"
-    }
-  });
+  try {
+    const responseUpload = await api.post("/upload-fornecedor", form, {
+      baseURL: 'http://localhost:8000/api/',
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+
+    return responseUpload.data;
+  } catch (error) {
+    return error;
+  }
 }
 </script>

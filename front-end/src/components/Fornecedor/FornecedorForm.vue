@@ -17,7 +17,9 @@
           >
             <v-text-field
               v-model="dados.nome_empresa"
-              label="Nome"
+              :rules="[() => !!dados.nome_empresa || 'Esse campo é obrigatório']"
+              required
+              label="Nome *"
               variant="solo"
             ></v-text-field>
           </v-col>
@@ -28,7 +30,9 @@
           >
             <v-text-field
               v-model="dados.email"
-              label="E-mail"
+              :rules="[() => !!dados.email || 'Esse campo é obrigatório']"
+              required
+              label="E-mail *"
               variant="solo"
               
             ></v-text-field>
@@ -40,8 +44,10 @@
           >
             <v-text-field
               v-model="dados.cnpj"
+              :rules="[() => !!dados.email || 'Esse campo é obrigatório']"
+              required
               :counter="14"
-              label="CNPJ"
+              label="CNPJ *"
               variant="solo"
               
             ></v-text-field>
@@ -155,7 +161,7 @@
           >
             <v-text-field
               v-model="dados.atuacao"
-              label="atuacao"
+              label="Atuação"
               variant="solo"
               
             ></v-text-field>
@@ -171,7 +177,7 @@
               chips
               multiple
               variant="outlined"
-              label="File input w/ chips"
+              label="Selecione seu arquivo *"
             ></v-file-input>
           </v-col>
 
@@ -319,10 +325,8 @@ export default {
   methods: {
     async submit () {
       if(await this.validateForm()){
-        this.$emit('onClickConfirm', this.dados, this.arquivoSelecionado);
-      } else {
-        alert('poxa');
-      }
+        this.$emit('onClickConfirm', this.dados, this.arquivoSelecionado, this.arquivoFornecedor.length > 0);
+      } 
     },
 
     clickDeleteFile(){
@@ -332,6 +336,25 @@ export default {
     },
 
     validateForm () {
+
+      if(this.dados.nome_empresa == null || this.dados.nome_empresa == '' || this.dados.nome_empresa.length <= 0){
+        alert('Informe um nome válido');
+
+        return false
+      }
+
+      if(this.dados.cnpj == null || this.dados.cnpj == '' || this.dados.cnpj.length <= 0 || this.dados.cnpj < 14){
+        alert('Informe um cnpj válido');
+
+        return false
+      }
+
+      if(this.dados.email == null || this.dados.email == '' || this.dados.email.length <= 0){
+        alert('Informe um e-mail válido');
+
+        return false
+      }
+
       return true;
     },
 

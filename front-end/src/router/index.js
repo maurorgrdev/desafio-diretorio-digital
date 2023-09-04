@@ -64,19 +64,15 @@ router.beforeEach(async (to, from, next) => {
   if(to.meta?.auth){
     const store = useUsuarioStore()
 
-    if(store.token && store.usuario){
+    if(store.token_user && store.usuario){
       const isAuthneticated = await store.verifyToken();
 
       if(isAuthneticated){
         next();
       } else {
-        localStorage.setItem("token", '');
-        store.token = '';
         next({name: 'login'})
       }
     } else {
-      localStorage.setItem("token", '');
-      store.token = '';
       next({name: 'login'})
     }
   } else {
