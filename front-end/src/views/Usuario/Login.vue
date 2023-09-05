@@ -68,14 +68,9 @@
         const response = await this.usuarioStore.login(results);
         
         await this.usuarioStore.loadUsuario();
-        
         if(response){
-            
-            await this.$router.replace({ path: '/fornecedores' })
-        } else {
-
-        }
-        
+            this.$router.push('/fornecedores');
+        } 
       },
       async checkApi (userName) {
         return new Promise(resolve => {

@@ -64,7 +64,7 @@ router.beforeEach(async (to, from, next) => {
   if(to.meta?.auth){
     const store = useUsuarioStore()
 
-    if(store.token_user && store.usuario){
+    if(store.token_user){
       const isAuthneticated = await store.verifyToken();
 
       if(isAuthneticated){
